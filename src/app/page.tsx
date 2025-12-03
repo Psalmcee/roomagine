@@ -296,11 +296,11 @@ export default function Home() {
         </section>
 
         {/* Featured Rooms */}
-        <section className="py-16 px-8 bg-gray-100" id="rooms">
+        <section className="py-12 px-2 bg-gray-100" id="rooms">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">Featured Room Designs</h2>
+            <h2 className="text-3xl px-2 font-bold">Featured Room Designs</h2>
           </div>
-          <main className="mx-auto max-w-7xl px-4 py-8">
+          <main className="mx-auto max-w-7xl px-4 pt-2 py-6">
             {/* Search Bar and FilterBar for Unsplash */}
             <div className="max-w-2xl mx-auto mt-8 mb-12">
               <div className="flex gap-2 mt-4">
