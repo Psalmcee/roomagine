@@ -19,18 +19,31 @@ import {
 } from "@supabase/supabase-js";
 import Footer from "@/components/Footer";
 
+// Add typed UnsplashPhoto interface
+interface UnsplashPhoto {
+  id: string;
+  alt_description?: string | null;
+  description?: string | null;
+  urls?: {
+    regular?: string | null;
+    small?: string | null;
+    full?: string | null;
+  } | null;
+}
+
 export default function Home() {
-  const [unsplashPhotos, setUnsplashPhotos] = useState<any[]>([]);
+  const [unsplashPhotos, setUnsplashPhotos] = useState<UnsplashPhoto[]>([]);
   const [searchQuery, setSearchQuery] = useState("african living room");
   const [isSearching, setIsSearching] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedStyle, setSelectedStyle] = useState<DesignStyle | "all">(
-    "all"
-  );
-  const [selectedRoom, setSelectedRoom] = useState<RoomType | "all">("all");
-  const [selectedPrice, setSelectedPrice] = useState("all");
+
+  const [_selectedStyle, _setSelectedStyle] = useState<DesignStyle | "all">(
+   "all"
+ );
+ const [_selectedRoom, _setSelectedRoom] = useState<RoomType | "all">("all");
+ const [_selectedPrice, _setSelectedPrice] = useState("all");
 
   useEffect(() => {
     setIsSearching(true);
@@ -91,15 +104,15 @@ export default function Home() {
 
   const filteredDesigns = designs.filter((design) => {
     const styleMatch =
-      selectedStyle === "all" || design.style === selectedStyle;
+      _selectedStyle === "all" || design.style === _selectedStyle;
     const roomMatch =
-      selectedRoom === "all" || design.roomType === selectedRoom;
+      _selectedRoom === "all" || design.roomType === _selectedRoom;
     const priceMatch =
-      selectedPrice === "all" || design.priceRange === selectedPrice;
+      _selectedPrice === "all" || design.priceRange === _selectedPrice;
     return styleMatch && roomMatch && priceMatch;
   });
 
-  const handleLike = async (id: any) => {
+  const handleLike = async (id: string) => {
     if (!user) {
       setIsAuthModalOpen(true);
       return;
@@ -123,7 +136,7 @@ export default function Home() {
     if (isHeroPaused) return;
     const t = setInterval(() => {
       setHeroIndex((i) => (i + 1) % heroImages.length);
-    }, 4000); // change slide every 5s
+    }, 5000); // change slide every 5s
     return () => clearInterval(t);
   }, [heroImages.length, isHeroPaused]);
 
@@ -142,12 +155,15 @@ export default function Home() {
               key={src}
               src={src}
               alt={`Hero ${i + 1}`}
-                fill
-                sizes="100vw"
-                priority={i === 0}
+              fill
+              sizes="100vw"
+              // ensure only the initial visible image is eager/preloaded
+              loading={i === 0 ? "eager" : "lazy"}
+              // give browser a hint; Next supports fetchPriority
+              fetchPriority={i === 0 ? "high" : "auto"}
               className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ${
                 heroIndex === i ? "opacity-100" : "opacity-0"
-              } `}
+              }`}
               style={{ pointerEvents: "none", userSelect: "none" }}
               draggable={false}
             />
@@ -215,9 +231,9 @@ export default function Home() {
                   transition={{ duration: 1.5 }}
                   className="bg-white text-gray-900 font-semibold px-6 py-3 rounded hover:bg-gray-200"
                 >
-                  <a href="#rooms" className="inline-block scroll-smooth">
+                  <Link href="#rooms" className="inline-block scroll-smooth">
                     Browse Room Ideas
-                  </a>
+                  </Link>
                 </motion.button>
 
                 <motion.button
@@ -226,9 +242,9 @@ export default function Home() {
                   transition={{ duration: 1.5 }}
                   className="bg-indigo-600 text-white font-semibold px-6 py-3 rounded hover:bg-indigo-700"
                 >
-                  <a href="/submit" className="inline-block">
+                  <Link href="/submit" className="inline-block">
                     Submit Your Design
-                  </a>
+                  </Link>
                 </motion.button>
               </div>
             </div>

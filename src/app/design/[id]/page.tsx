@@ -38,8 +38,12 @@ const dummyFurniture: FurnitureItem[] = [
 
 export default function DesignDetailPage({ params }: DesignDetailPageProps) {
   // params may be a Promise in newer Next.js versions — unwrap safely with React.use when available
-  const usableParams = (React as any).use ? (React as any).use(params) : (params as { id: string });
-  const { id } = usableParams as { id: string };
+ 
+    const usableParams = React.use
+    ? (React.use as (promise: Promise<{ id: string }> | { id: string }) => { id: string })(params)
+    : (params as { id: string });
+  
+  const { id } = usableParams;
 
   const [design, setDesign] = React.useState<Design | null>(null);
   const [similarDesigns, setSimilarDesigns] = React.useState<Design[]>([]);
