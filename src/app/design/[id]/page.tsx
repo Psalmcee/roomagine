@@ -221,9 +221,9 @@ export default function DesignDetailPage({ params }: DesignDetailPageProps) {
 
       {/* Similar Designs Section */}
       {similarDesigns.length > 0 && (
-        <div className="my-12 px-12">
+        <div className="my-12 px-6">
           <h3 className="text-2xl text-center font-semibold mb-4">Similar Designs</h3>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
             {similarDesigns.map((sim: Design) => (
               <a key={sim.id} href={`/design/${sim.id}`}>
                 <DesignCard design={sim} onLike={() => {}} />

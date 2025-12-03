@@ -321,9 +321,9 @@ export default function Home() {
               </div>
             </div>
             {/* Unsplash Results */}
-            <div className="mx-auto max-w-7xl px-4 py-8">
+            <div className="mx-auto max-w-7xl px-2 py-8 bg-blue-500">
               {unsplashPhotos.length > 0 ? (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {unsplashPhotos.map((photo) => {
                     // Map Unsplash photo to Design shape
                     const fakeDesign = {
