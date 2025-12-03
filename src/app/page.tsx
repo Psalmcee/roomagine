@@ -321,7 +321,7 @@ export default function Home() {
               </div>
             </div>
             {/* Unsplash Results */}
-            <div className="mx-auto max-w-7xl px-2 py-8 bg-blue-500">
+            <div className="mx-auto max-w-7xl px-2 py-8">
               {unsplashPhotos.length > 0 ? (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {unsplashPhotos.map((photo) => {
@@ -359,7 +359,7 @@ export default function Home() {
             </div>
             {isLoading ? (
               // Skeleton Loader Grid
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
